@@ -1,5 +1,6 @@
 local config = require("q.Argonian Anatomy.config")
 
+local log = mwse.Logger.new()
 local this = {}
 
 ---@param reference tes3reference
@@ -13,10 +14,12 @@ function this.loadSkeleton(reference)
 	if not this.isArgonian(reference) then
 		return false
 	end
+
 	tes3.loadAnimation {
 		reference = reference,
 		file = "zilla\\base_animkna.nif"
 	}
+
 	return true
 end
 
@@ -26,12 +29,14 @@ function this.removeSkeleton(reference)
 	if not this.isArgonian(reference) then
 		return false
 	end
+
 	tes3.loadAnimation {
 		reference = reference,
 		-- This is a workaround because tes3.loadAnimations
 		-- doesn't account for werewolf transformations.
 		file = "Wolf\\Skin.nif"
 	}
+
 	return true
 end
 

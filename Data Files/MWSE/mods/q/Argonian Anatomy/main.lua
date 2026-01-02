@@ -1,5 +1,9 @@
 local util = require("q.Argonian Anatomy.util")
 
+local log = mwse.Logger.new({
+	name = "Argonian Anatomy",
+	logLevel = mwse.logLevel.trace
+})
 local transformed = false
 
 --- This function returns references to all actors in active cells, and optionally
