@@ -1,8 +1,10 @@
+local config = require("q.Argonian Anatomy.config")
 local util = require("q.Argonian Anatomy.util")
+
 
 local log = mwse.Logger.new({
 	name = "Argonian Anatomy",
-	logLevel = mwse.logLevel.trace
+	logLevel = config.logLevel
 })
 dofile("q.Argonian Anatomy.mcm")
 
