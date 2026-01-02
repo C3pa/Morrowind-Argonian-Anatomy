@@ -8,28 +8,28 @@ local transformed = false
 ---@param includePlayer boolean
 ---@param filter number|number[]|nil
 ---@return tes3reference[]
-local function actorsInActiveCells(includePlayer, filter )
-    includePlayer = includePlayer or false
-    filter = filter or { tes3.objectType.npc }
+local function actorsInActiveCells(includePlayer, filter)
+	includePlayer = includePlayer or false
+	filter = filter or { tes3.objectType.npc }
 
-    return coroutine.wrap(function() ---@diagnostic disable-line
-        for _, cell in pairs(tes3.getActiveCells()) do
-            for reference in cell:iterateReferences(filter) do
-                coroutine.yield(reference)
-            end
-        end
-        if includePlayer then
-            coroutine.yield(tes3.player)
-        end
-    end)
+	return coroutine.wrap(function() ---@diagnostic disable-line
+		for _, cell in pairs(tes3.getActiveCells()) do
+			for reference in cell:iterateReferences(filter) do
+				coroutine.yield(reference)
+			end
+		end
+		if includePlayer then
+			coroutine.yield(tes3.player)
+		end
+	end)
 end
 
 local function processNPCs()
-    for reference in actorsInActiveCells(false, { tes3.objectType.npc }) do
+	for reference in actorsInActiveCells(false, { tes3.objectType.npc }) do
 		if reference.mobile and (not reference.mobile.werewolf) and (not reference.disabled) then
 			util.loadSkeleton(reference)
 		end
-    end
+	end
 end
 
 local function updatePlayer()
@@ -66,7 +66,7 @@ end
 event.register(tes3.event.initialized, function()
 	event.register(tes3.event.loaded, setup)
 	event.register(tes3.event.charGenFinished, setup)
-    event.register(tes3.event.cellChanged, processNPCs)
+	event.register(tes3.event.cellChanged, processNPCs)
 end)
 
 event.register(tes3.event.modConfigReady, function()
