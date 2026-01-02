@@ -37,18 +37,13 @@ local function updatePlayer()
 		if transformed then
 			transformed = false
 			util.removeSkeleton(tes3.player)
-			return
-		else
-			return
 		end
-	else
-		if not transformed then
-			transformed = true
-			util.loadSkeleton(tes3.player)
-			return
-		else
-			return
-		end
+		return
+	end
+
+	if not transformed then
+		transformed = true
+		util.loadSkeleton(tes3.player)
 	end
 end
 
