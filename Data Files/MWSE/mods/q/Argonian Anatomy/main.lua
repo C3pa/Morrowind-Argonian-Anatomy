@@ -26,7 +26,7 @@ end
 
 local function processNPCs()
     for reference in actorsInActiveCells(false, { tes3.objectType.npc }) do
-		if reference.mobile and (not reference.mobile.werewolf) then
+		if reference.mobile and (not reference.mobile.werewolf) and (not reference.disabled) then
 			util.loadSkeleton(reference)
 		end
     end
