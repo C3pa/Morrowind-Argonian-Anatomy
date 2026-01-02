@@ -38,58 +38,52 @@ local function createSidebar(container)
 	end
 end
 
-local function newline(component)
-	component:createInfo({ text = "\n" })
-end
-
 local function registerModConfig()
 	local template = mwse.mcm.createTemplate({
 		name = "Argonian Anatomy",
-		headerImagePath = "MWSE/mods/q/Argonian Anatomy/Title.tga"
+		headerImagePath = "MWSE/mods/q/Argonian Anatomy/Title.tga",
+		config = config,
+		defaultConfig = config.defaultConfig,
+		showDefaultSetting = true,
 	})
 	template:register()
-	template:saveOnClose("Argonian Anatomy", config)
+	template:saveOnClose(config.fileName, config)
 
 	local settingsPage = template:createSideBarPage({
 		label = "Preferences",
-		noScroll = true
+		noScroll = true,
+		showReset = true
 	})
 	createSidebar(settingsPage)
 
-	newline(settingsPage)
 	settingsPage:createCategory({ label = "Which races should have the new skeleton?" })
 
-	newline(settingsPage)
 	settingsPage:createOnOffButton({
 		label = "The Argonians",
 		description = "This will enable new skeleton for all members of the Argonian race.",
-		variable = mwse.mcm.createTableVariable({
-			id = "argonian",
-			table = config,
-			restartRequired = true,
-		})
+		leftSide = false,
+		configKey = "argonian",
+		restartRequired = true
 	})
 
-	newline(settingsPage)
 	settingsPage:createOnOffButton({
 		label = "The Naga Breed",
 		description = "This will enable new skeleton for all members of the Naga Breed mod.",
-		variable = mwse.mcm.createTableVariable({
-			id = "godzilla",
-			table = config,
-			restartRequired = true,
-		})
+		leftSide = false,
+		configKey = "godzilla",
+		restartRequired = true
 	})
 
-	newline(settingsPage)
 	settingsPage:createOnOffButton({
 		label = "The Shadowscales",
 		description = "This will enable new skeleton for the Shadowscales mod.",
-		variable = mwse.mcm.createTableVariable({
-			id = "shadowscale",
-			table = config,
-			restartRequired = true,
-		})
+		leftSide = false,
+		configKey = "shadowscale",
+		restartRequired = true
+	})
+
+	settingsPage:createLogLevelOptions({
+		configKey = "logLevel"
 	})
 end
 
