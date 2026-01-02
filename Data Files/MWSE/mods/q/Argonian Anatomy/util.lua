@@ -11,32 +11,29 @@ end
 ---@param reference tes3reference
 ---@return boolean loaded
 function this.loadSkeleton(reference)
-	if this.isArgonian(reference) then
-		tes3.loadAnimation {
-			reference = reference,
-			file = "zilla\\base_animkna.nif"
-		}
-		return true
+	if not this.isArgonian(reference) then
+		return false
 	end
-
-	return false
+	tes3.loadAnimation {
+		reference = reference,
+		file = "zilla\\base_animkna.nif"
+	}
+	return true
 end
 
 ---@param reference tes3reference
 ---@return boolean removed
 function this.removeSkeleton(reference)
-	if this.isArgonian(reference) then
-		tes3.loadAnimation {
-			reference = reference,
-			-- This is a workaround because tes3.loadAnimations
-			-- doesn't account for werewolf transformations.
-			file = "Wolf\\Skin.nif"
-		}
-
-		return true
+	if not this.isArgonian(reference) then
+		return false
 	end
-
-	return false
+	tes3.loadAnimation {
+		reference = reference,
+		-- This is a workaround because tes3.loadAnimations
+		-- doesn't account for werewolf transformations.
+		file = "Wolf\\Skin.nif"
+	}
+	return true
 end
 
 return this
