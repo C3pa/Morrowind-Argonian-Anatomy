@@ -17,10 +17,10 @@ function this.loadSkeleton(reference)
 
 	local posBefore
 	posBefore = reference.position:copy()
-	tes3.loadAnimation {
+	tes3.loadAnimation({
 		reference = reference,
 		file = "zilla\\base_animkna.nif"
-	}
+	})
 	reference.position = posBefore
 	log:debug("Loading custom skeleton for:\n\tId: %s,\n\tPosition before: %s,\n\tPosition after:  %s", reference.id,
 		posBefore, reference.position)
@@ -34,12 +34,8 @@ function this.removeSkeleton(reference)
 		return false
 	end
 
-	tes3.loadAnimation {
-		reference = reference,
-		-- This is a workaround because tes3.loadAnimations
-		-- doesn't account for werewolf transformations.
-		file = "Wolf\\Skin.nif"
-	}
+	-- We need to remove this skeleton if the player transformed into a werewolf
+	tes3.loadAnimation({ reference = reference })
 
 	return true
 end
