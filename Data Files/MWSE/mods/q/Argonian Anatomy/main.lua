@@ -4,6 +4,8 @@ local log = mwse.Logger.new({
 	name = "Argonian Anatomy",
 	logLevel = mwse.logLevel.trace
 })
+dofile("q.Argonian Anatomy.mcm")
+
 local playerSkeletonLoaded = false
 
 --- This function returns references to all actors in active cells
@@ -61,8 +63,4 @@ event.register(tes3.event.initialized, function()
 	event.register(tes3.event.loaded, setup)
 	event.register(tes3.event.charGenFinished, setup)
 	event.register(tes3.event.cellChanged, processNPCs)
-end)
-
-event.register(tes3.event.modConfigReady, function()
-	dofile("q.Argonian Anatomy.mcm")
 end)

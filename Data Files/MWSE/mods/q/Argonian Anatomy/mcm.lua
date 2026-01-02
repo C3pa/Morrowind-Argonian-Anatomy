@@ -1,50 +1,63 @@
 local config = require("q.Argonian Anatomy.config")
+local log = mwse.Logger.new()
+
+local authors = {
+	{
+		name = "Made by Qwerty",
+		url = "https://www.nexusmods.com/profile/qwertyquit/mods",
+	},
+	{
+		name = "Programming by C3pa",
+		url = "https://www.nexusmods.com/profile/C3pa/mods"
+	},
+	{
+		name = "Help with animations from EJ-12",
+		url = "https://www.nexusmods.com/profile/HedgeHog12/mods"
+	}
+}
+
+
+--- @param self mwseMCMInfo|mwseMCMHyperlink
+local function center(self)
+	self.elements.info.absolutePosAlignX = 0.5
+end
+
+--- Adds default text to sidebar. Has a list of all the authors that contributed to the mod.
+--- @param container mwseMCMSideBarPage
+local function createSidebar(container)
+	container.sidebar:createInfo({
+		text = "\nWelcome to Argonian Anatomy!",
+		postCreate = center,
+	})
+	for _, author in ipairs(authors) do
+		container.sidebar:createHyperlink({
+			text = author.name,
+			url = author.url,
+			postCreate = center,
+		})
+	end
+end
 
 local function newline(component)
 	component:createInfo({ text = "\n" })
 end
 
-local function postFormat(self)
-	self.elements.info.layoutOriginFractionX = 0.5
-end
-
-local function addSideBar(component)
-	component.sidebar:createInfo({
-		text = "\nWelcome to Argonian Anatomy!",
-		postCreate = postFormat
+local function registerModConfig()
+	local template = mwse.mcm.createTemplate({
+		name = "Argonian Anatomy",
+		headerImagePath = "MWSE/mods/q/Argonian Anatomy/Title.tga"
 	})
-	component.sidebar:createHyperLink({
-		text = "\nMade by Qwerty",
-		exec = "start https://www.nexusmods.com/users/57788911?tab=user+files",
-		postCreate = postFormat,
-	})
-	component.sidebar:createHyperLink({
-		text = "\nCoding by C3pa",
-		exec = "start https://www.nexusmods.com/users/37172285?tab=user+files",
-		postCreate = postFormat
-	})
-	component.sidebar:createHyperLink({
-		text = "\nHelp with animations by EJ-12",
-		exec = "start https://www.nexusmods.com/morrowind/users/468930?tab=user+files",
-		postCreate = postFormat
-	})
-end
+	template:register()
+	template:saveOnClose("Argonian Anatomy", config)
 
-
-local template = mwse.mcm.createTemplate({
-	name = "Argonian Anatomy",
-	headerImagePath = "MWSE/mods/q/Argonian Anatomy/Title.tga"
-})
-template:register()
-template:saveOnClose("Argonian Anatomy", config)
-
-do
-	local settingsPage = template:createSideBarPage({ label = "Preferences" })
-	addSideBar(settingsPage)
-	settingsPage.noScroll = true
+	local settingsPage = template:createSideBarPage({
+		label = "Preferences",
+		noScroll = true
+	})
+	createSidebar(settingsPage)
 
 	newline(settingsPage)
-	settingsPage:createCategory({ label = "Which races should have new skeleton?" })
+	settingsPage:createCategory({ label = "Which races should have the new skeleton?" })
 
 	newline(settingsPage)
 	settingsPage:createOnOffButton({
@@ -79,3 +92,5 @@ do
 		})
 	})
 end
+
+event.register(tes3.event.modConfigReady, registerModConfig)
