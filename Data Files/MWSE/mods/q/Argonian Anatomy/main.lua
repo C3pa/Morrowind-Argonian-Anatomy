@@ -6,23 +6,18 @@ local log = mwse.Logger.new({
 })
 local transformed = false
 
---- This function returns references to all actors in active cells, and optionally
---- the player reference. A filter parameter can be passed (optional). Filter is
+--- This function returns references to all actors in active cells
+--- A filter parameter can be passed (optional). Filter is
 --- a table with tes3.objectType.* constants. If no filter is passed, { tes3.objectType.npc } is used as a filter.
----@param includePlayer boolean
----@param filter number|number[]|nil
+---@param filter? integer|integer[]
 ---@return fun(): tes3reference
-local function actorsInActiveCells(includePlayer, filter)
-	includePlayer = includePlayer or false
+local function actorsInActiveCells(filter)
 	filter = filter or { tes3.objectType.npc }
 	local function iter()
 		for _, cell in pairs(tes3.getActiveCells()) do
 			for reference in cell:iterateReferences(filter) do
 				coroutine.yield(reference)
 			end
-		end
-		if includePlayer then
-			coroutine.yield(tes3.player)
 		end
 	end
 	return coroutine.wrap(iter)
@@ -33,7 +28,7 @@ local function processNPCs()
 		function()
 			timer.delayOneFrame(
 				function()
-					for reference in actorsInActiveCells(false, { tes3.objectType.npc }) do
+					for reference in actorsInActiveCells({ tes3.objectType.npc }) do
 						if reference.mobile and
 							(not reference.mobile.werewolf) and
 							(not reference.disabled) then
