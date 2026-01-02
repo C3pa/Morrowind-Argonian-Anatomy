@@ -8,7 +8,7 @@ local transformed = false
 ---@param includePlayer boolean
 ---@param filter number|number[]|nil
 ---@return fun(): tes3reference
-local function actorsInActiveCells(includePlayer, filter)
+local function actorsInActiveCells(includePlayer, filter )
 	includePlayer = includePlayer or false
 	filter = filter or { tes3.objectType.npc }
 	local function iter()
@@ -25,17 +25,21 @@ local function actorsInActiveCells(includePlayer, filter)
 end
 
 local function processNPCs()
-	timer.frame.delayOneFrame(
-		function()
-			for reference in actorsInActiveCells(false, { tes3.objectType.npc }) do
-				if reference.mobile and
-					(not reference.mobile.werewolf) and
-					(not reference.disabled) then
-					util.loadSkeleton(reference)
-				end
-			end
-		end
-	)
+    timer.delayOneFrame(
+        function()
+            timer.delayOneFrame(
+                function()
+                    for reference in actorsInActiveCells(false, { tes3.objectType.npc }) do
+                        if reference.mobile and
+                        (not reference.mobile.werewolf) and
+                        (not reference.disabled) then
+                            util.loadSkeleton(reference)
+                        end
+                    end
+                end
+            )
+        end
+    )
 end
 
 local function updatePlayer()
