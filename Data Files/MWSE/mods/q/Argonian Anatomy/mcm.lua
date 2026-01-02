@@ -43,7 +43,7 @@ local function registerModConfig()
 		name = "Argonian Anatomy",
 		headerImagePath = "MWSE/mods/q/Argonian Anatomy/Title.tga",
 		config = config,
-		defaultConfig = config.defaultConfig,
+		defaultConfig = config.default,
 		showDefaultSetting = true,
 	})
 	template:register()
