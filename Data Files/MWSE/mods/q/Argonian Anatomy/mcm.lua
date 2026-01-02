@@ -23,7 +23,7 @@ local function addSideBar(component)
 		exec = "start https://www.nexusmods.com/users/37172285?tab=user+files",
 		postCreate = postFormat
 	})
-    component.sidebar:createHyperLink({
+	component.sidebar:createHyperLink({
 		text = "\nHelp with animations by EJ-12",
 		exec = "start https://www.nexusmods.com/morrowind/users/468930?tab=user+files",
 		postCreate = postFormat
@@ -39,43 +39,43 @@ template:register()
 template:saveOnClose("Argonian Anatomy", config)
 
 do
-    local settingsPage = template:createSideBarPage({ label = "Preferences" })
-    addSideBar(settingsPage)
-    settingsPage.noScroll = true
+	local settingsPage = template:createSideBarPage({ label = "Preferences" })
+	addSideBar(settingsPage)
+	settingsPage.noScroll = true
 
-    newline(settingsPage)
-    settingsPage:createCategory({ label = "Which races should have new skeleton?" })
+	newline(settingsPage)
+	settingsPage:createCategory({ label = "Which races should have new skeleton?" })
 
-    newline(settingsPage)
-    settingsPage:createOnOffButton({
-        label = "The Argonians",
-        description = "This will enable new skeleton for all members of the Argonian race.",
-        variable = mwse.mcm.createTableVariable({
-            id = "argonian",
-            table = config,
-            restartRequired = true,
-        })
-    })
+	newline(settingsPage)
+	settingsPage:createOnOffButton({
+		label = "The Argonians",
+		description = "This will enable new skeleton for all members of the Argonian race.",
+		variable = mwse.mcm.createTableVariable({
+			id = "argonian",
+			table = config,
+			restartRequired = true,
+		})
+	})
 
-    newline(settingsPage)
-    settingsPage:createOnOffButton({
-        label = "The Naga Breed",
-        description = "This will enable new skeleton for all members of the Naga Breed mod.",
-        variable = mwse.mcm.createTableVariable({
-            id = "godzilla",
-            table = config,
-            restartRequired = true,
-        })
-    })
+	newline(settingsPage)
+	settingsPage:createOnOffButton({
+		label = "The Naga Breed",
+		description = "This will enable new skeleton for all members of the Naga Breed mod.",
+		variable = mwse.mcm.createTableVariable({
+			id = "godzilla",
+			table = config,
+			restartRequired = true,
+		})
+	})
 
-    newline(settingsPage)
-    settingsPage:createOnOffButton({
-        label = "The Shadowscales",
-        description = "This will enable new skeleton for the Shadowscales mod.",
-        variable = mwse.mcm.createTableVariable({
-            id = "shadowscale",
-            table = config,
-            restartRequired = true,
-        })
-    })
+	newline(settingsPage)
+	settingsPage:createOnOffButton({
+		label = "The Shadowscales",
+		description = "This will enable new skeleton for the Shadowscales mod.",
+		variable = mwse.mcm.createTableVariable({
+			id = "shadowscale",
+			table = config,
+			restartRequired = true,
+		})
+	})
 end
