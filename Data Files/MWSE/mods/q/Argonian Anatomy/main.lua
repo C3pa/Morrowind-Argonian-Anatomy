@@ -59,8 +59,6 @@ local function setup()
 	event.register(tes3.event.simulate, updatePlayer)
 end
 
-event.register(tes3.event.initialized, function()
-	event.register(tes3.event.loaded, setup)
-	event.register(tes3.event.charGenFinished, setup)
-	event.register(tes3.event.cellChanged, processNPCs)
-end)
+event.register(tes3.event.loaded, setup)
+event.register(tes3.event.charGenFinished, setup)
+event.register(tes3.event.cellChanged, processNPCs)
