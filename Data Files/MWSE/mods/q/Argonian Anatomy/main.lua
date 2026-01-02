@@ -2,17 +2,16 @@ local util = require("q.Argonian Anatomy.util")
 
 local transformed = false
 
--- This function returns references to all actors in active cells, and optionally
--- the player reference. A filter parameter can be passed (optional). Filter is
--- a table with tes3.objectType.* constants. If no filter is passed, { tes3.objectType.npc } is used as a filter.
+--- This function returns references to all actors in active cells, and optionally
+--- the player reference. A filter parameter can be passed (optional). Filter is
+--- a table with tes3.objectType.* constants. If no filter is passed, { tes3.objectType.npc } is used as a filter.
 ---@param includePlayer boolean
 ---@param filter number|number[]|nil
----@return tes3reference[]
+---@return fun(): tes3reference
 local function actorsInActiveCells(includePlayer, filter)
 	includePlayer = includePlayer or false
 	filter = filter or { tes3.objectType.npc }
-
-	return coroutine.wrap(function() ---@diagnostic disable-line
+	local function iter()
 		for _, cell in pairs(tes3.getActiveCells()) do
 			for reference in cell:iterateReferences(filter) do
 				coroutine.yield(reference)
@@ -21,7 +20,8 @@ local function actorsInActiveCells(includePlayer, filter)
 		if includePlayer then
 			coroutine.yield(tes3.player)
 		end
-	end)
+	end
+	return coroutine.wrap(iter)
 end
 
 local function processNPCs()
