@@ -4,7 +4,7 @@ local log = mwse.Logger.new({
 	name = "Argonian Anatomy",
 	logLevel = mwse.logLevel.trace
 })
-local transformed = false
+local playerSkeletonLoaded = false
 
 --- This function returns references to all actors in active cells
 --- A filter parameter can be passed (optional). Filter is
@@ -34,21 +34,20 @@ end
 
 local function updatePlayer()
 	if tes3.mobilePlayer.werewolf then
-		if transformed then
-			transformed = false
+		if playerSkeletonLoaded then
+			playerSkeletonLoaded = false
 			util.removeSkeleton(tes3.player)
 		end
 		return
 	end
+	if playerSkeletonLoaded then return end
 
-	if not transformed then
-		transformed = true
-		util.loadSkeleton(tes3.player)
-	end
+	playerSkeletonLoaded = true
+	util.loadSkeleton(tes3.player)
 end
 
 local function setup()
-	transformed = false
+	playerSkeletonLoaded = false
 	if event.isRegistered(tes3.event.simulate, updatePlayer) then
 		event.unregister(tes3.event.simulate, updatePlayer)
 	end
