@@ -15,11 +15,15 @@ function this.loadSkeleton(reference)
 		return false
 	end
 
+	local posBefore
+	posBefore = reference.position:copy()
 	tes3.loadAnimation {
 		reference = reference,
 		file = "zilla\\base_animkna.nif"
 	}
-
+	reference.position = posBefore
+	log:debug("Loading custom skeleton for:\n\tId: %s,\n\tPosition before: %s,\n\tPosition after:  %s", reference.id,
+		posBefore, reference.position)
 	return true
 end
 
