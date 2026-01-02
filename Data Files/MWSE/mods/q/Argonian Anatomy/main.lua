@@ -15,7 +15,7 @@ local function actorsInActiveCells(filter)
 	filter = filter or { tes3.objectType.npc }
 	local function iter()
 		for _, cell in pairs(tes3.getActiveCells()) do
-			for reference in cell:iterateReferences(filter) do
+			for reference in cell:iterateReferences(filter, false) do
 				coroutine.yield(reference)
 			end
 		end
@@ -29,9 +29,7 @@ local function processNPCs()
 			timer.delayOneFrame(
 				function()
 					for reference in actorsInActiveCells({ tes3.objectType.npc }) do
-						if reference.mobile and
-							(not reference.mobile.werewolf) and
-							(not reference.disabled) then
+						if reference.mobile and not reference.mobile.werewolf then
 							util.loadSkeleton(reference)
 						end
 					end
