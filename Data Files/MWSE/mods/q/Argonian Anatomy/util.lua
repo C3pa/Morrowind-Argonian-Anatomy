@@ -3,7 +3,6 @@ local config = require("q.Argonian Anatomy.config")
 local this = {}
 
 ---@param reference tes3reference
----@return boolean argonian
 function this.isArgonian(reference)
 	return config[reference.object.race.id:lower()] or false
 end
