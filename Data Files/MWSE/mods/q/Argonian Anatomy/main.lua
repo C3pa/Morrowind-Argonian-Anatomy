@@ -24,19 +24,12 @@ local function actorsInActiveCells(filter)
 end
 
 local function processNPCs()
-	timer.delayOneFrame(
-		function()
-			timer.delayOneFrame(
-				function()
-					for reference in actorsInActiveCells({ tes3.objectType.npc }) do
-						if reference.mobile and not reference.mobile.werewolf then
-							util.loadSkeleton(reference)
-						end
-					end
-				end
-			)
+	for reference in actorsInActiveCells(tes3.objectType.npc) do
+		local mob = reference.mobile
+		if mob and not mob.werewolf then
+			util.loadSkeleton(reference)
 		end
-	)
+	end
 end
 
 local function updatePlayer()
